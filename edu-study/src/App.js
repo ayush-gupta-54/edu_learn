@@ -5,7 +5,8 @@ import "./App.css";
 import logo from "./logo.jpg";
 import bgImage from "./background.png";
 import Login from "./login";     // Your login page
-import Contact from "./contact"; // ✅ New contact page
+import Contact from "./contact"; // Contact page
+import Signup from "./Signup";   // ✅ Import Signup page
 
 function Landing() {
   return (
@@ -54,8 +55,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />   {/* ✅ Signup route added */}
         <Route path="/contact" element={<Contact />} />
-        {/* ✅ You can add more pages later */}
+        {/* ✅ More pages can be added here */}
       </Routes>
     </Router>
   );

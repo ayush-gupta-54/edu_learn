@@ -1,0 +1,148 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
+
+.signup-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.signup-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+.signup-left img {
+  max-width: 80%;
+  height: auto;
+}
+
+.signup-right {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-header img.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.signup-right h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.checkbox {
+  font-size: 14px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox input {
+  margin-right: 8px;
+}
+
+.continue-btn {
+  padding: 14px;
+  background: #6c2eb9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.continue-btn:hover {
+  background: #4b1f7f;
+}
+
+.divider {
+  text-align: center;
+  margin: 25px 0;
+  position: relative;
+}
+
+.divider span {
+  background: #fff;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: #ddd;
+  z-index: -1;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.social-buttons button {
+  margin: 0 8px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.terms {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.terms a {
+  color: #6c2eb9;
+  text-decoration: none;
+}
+
+.login-link {
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #6c2eb9;
+  font-weight: bold;
+  text-decoration: none;
+}
