@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import logo from "./logo.jpg";
-import bgImage from "./background image.webp";
-import Login from "./Login"; // Import your login page
+import bgImage from "./background-image.webp";
+import Login from "./login"; // Import your login page
 
 function Landing() {
   return (
