@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import logo from "./logo.jpg";
-import bgImage from "./background-image.webp";
+import bgImage from "./background.png";
 import Login from "./login"; // Import your login page
 
 function Landing() {
@@ -14,13 +14,13 @@ function Landing() {
           <img src={logo} alt="EduStudy Logo" />
         </div>
         <nav>
-          <ul>
-            <li><a href="#">Courses</a></li>
-            <li><a href="#">Resources</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </nav>
+  <ul>
+    <li><Link to="/courses">Courses</Link></li>
+    <li><Link to="/resources">Resources</Link></li>
+    <li><Link to="/about">About</Link></li>
+    <li><Link to="/contact">Contact</Link></li>
+  </ul>
+</nav>
         <div className="auth-buttons">
           {/* ✅ Changed <a> to <Link> */}
           <Link to="/login" className="login">Login</Link>
