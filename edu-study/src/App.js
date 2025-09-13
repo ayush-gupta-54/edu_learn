@@ -1,9 +1,11 @@
+// src/App.js
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import logo from "./logo.jpg";
-import bgImage from "./background image.webp";
-import Login from "./Login"; // Import your login page
+import bgImage from "./background.png";
+import Login from "./login";     // Your login page
+import Contact from "./contact"; // ✅ New contact page
 
 function Landing() {
   return (
@@ -15,16 +17,15 @@ function Landing() {
         </div>
         <nav>
           <ul>
-            <li><a href="#">Courses</a></li>
-            <li><a href="#">Resources</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><Link to="/courses">Courses</Link></li>
+            <li><Link to="/resources">Resources</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
           </ul>
         </nav>
         <div className="auth-buttons">
-          {/* ✅ Changed <a> to <Link> */}
           <Link to="/login" className="login">Login</Link>
-          <a href="#" className="signup">Signup</a>
+          <Link to="/signup" className="signup">Signup</Link>
         </div>
       </header>
 
@@ -40,7 +41,7 @@ function Landing() {
             Learn new skills, grow your career, and unlock your potential
             with our expert-led courses.
           </p>
-          <a href="#" className="learn-btn">Learn More</a>
+          <Link to="/courses" className="learn-btn">Learn More</Link>
         </div>
       </section>
     </div>
@@ -53,6 +54,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/contact" element={<Contact />} />
+        {/* ✅ You can add more pages later */}
       </Routes>
     </Router>
   );
