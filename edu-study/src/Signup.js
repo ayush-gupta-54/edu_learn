@@ -15,6 +15,7 @@ const Signup = () => {
     setLoading(true);
 
     try {
+      // 1️⃣ Register user
       const response = await fetch("http://localhost:5000/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,10 +27,25 @@ const Signup = () => {
       if (response.ok) {
         alert("✅ " + data.message);
 
-        // Store userId in localStorage so we can create Student profile later
+        // Save userId for session
         localStorage.setItem("userId", data.userId);
 
-        // Redirect to login page (optional)
+        // 2️⃣ Create an empty Student profile for this user
+        await fetch("http://localhost:5000/student", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: data.userId,
+            name: name,          // take name from signup form
+            cgpa: null,          // initially empty
+            projects: [],
+            hobbies: [],
+            internships: [],
+            aspirations: "",
+          }),
+        });
+
+        // 3️⃣ Redirect to login (or dashboard)
         window.location.href = "/login";
       } else {
         alert("❌ " + data.message);
