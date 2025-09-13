@@ -1,57 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import "./login.css";
-import logo from "./logo.jpg"; // EduStudy logo
+import logo from "./logo.jpg";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+    alert(data.message);
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
-        {/* Logo */}
         <img src={logo} alt="EduStudy Logo" className="logo" />
-
-        {/* Title */}
         <h2 className="login-title">Log in to EduStudy</h2>
 
-        {/* Social Login */}
-        <div className="social-buttons">
-          <button className="google">G</button>
-          <button className="facebook">f</button>
-
-        </div>
-
-        <div className="divider">
-          <span>or</span>
-        </div>
-
-        {/* Email / Password */}
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Email address</label>
-          <input type="email" placeholder="Enter your email" required />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
           <label>Password</label>
-          <div className="password-container">
-            <input type="password" placeholder="Enter your password" required />
-            <span className="eye">👁️</span>
-          </div>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-          <a href="#" className="forgot">
-            Forgot password?
-          </a>
-
-          <button type="submit" className="login-btn">
-            Log in
-          </button>
+          <button type="submit" className="login-btn">Log in</button>
         </form>
-
-        {/* Bottom Links */}
-        <div className="footer-links">
-          <p>
-            Can’t access your account? <a href="#">Help</a>
-          </p>
-          <p>
-            Don’t have an account? <a href="#">Sign Up</a>
-          </p>
-        </div>
       </div>
     </div>
   );
