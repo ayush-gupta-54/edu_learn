@@ -1,37 +1,53 @@
-// src/contact.js
+// src/App.js
 import React from "react";
 import "./App.css";
+import logo from "./logo.jpg"; // Place your logo in src folder
 
-function Contact() {
+function App() {
   return (
-    <div className="contact-page">
-      <h1>📞 Contact Us</h1>
-      <p>If you have questions, feel free to reach out to our developers:</p>
+    <div className="App">
+      {/* Header */}
+      <header className="header">
+        <img src={logo} alt="EduStudy Logo" className="logo" />
+        <h1>EduStudy</h1>
+      </header>
 
-      <div className="contact-cards">
-        <div className="card">
-          <h3>👩‍💻 Nidhi Sharma</h3>
-          <p>Email: nidhi@example.com</p>
-          <p>LinkedIn: <a href="https://linkedin.com/in/nidhi" target="_blank" rel="noreferrer">Profile</a></p>
-          <p>GitHub: <a href="https://github.com/nidhi" target="_blank" rel="noreferrer">github.com/nidhi</a></p>
+      {/* Contact Container */}
+      <div className="container">
+        <h2>Contact Us</h2>
+
+        {/* Contact Info */}
+        <div className="contact-details">
+          <div>
+            <h3>📞 Phone</h3>
+            <p>+91 98765 43210</p>
+          </div>
+          <div>
+            <h3>📧 Email</h3>
+            <p>support@edustudy.com</p>
+          </div>
+          <div>
+            <h3>📍 Address</h3>
+            <p>123 Edu Street, Learning City</p>
+          </div>
         </div>
 
-        <div className="card">
-          <h3>👨‍💻 Dev Kumar</h3>
-          <p>Email: dev@example.com</p>
-          <p>LinkedIn: <a href="https://linkedin.com/in/dev" target="_blank" rel="noreferrer">Profile</a></p>
-          <p>GitHub: <a href="https://github.com/dev" target="_blank" rel="noreferrer">github.com/dev</a></p>
-        </div>
+        {/* Contact Form */}
+        <form className="form">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <input type="text" placeholder="Subject" required />
+          <textarea placeholder="Your Message"></textarea>
+          <button type="submit">Send Message</button>
+        </form>
       </div>
 
-      <button
-        className="back-btn"
-        onClick={() => window.history.back()}
-      >
-        ⬅ Back
-      </button>
+      {/* Footer */}
+      <footer className="footer">
+        &copy; 2025 EduStudy | All Rights Reserved
+      </footer>
     </div>
   );
 }
 
-export default Contact;
+export default App;
