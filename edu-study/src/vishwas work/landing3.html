@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduStudy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Navbar */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #6c2eb9;
+    }
+
+    .auth-buttons a {
+      margin-left: 15px;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .auth-buttons .login {
+      border: 1px solid #6c2eb9;
+      color: #6c2eb9;
+    }
+
+    .auth-buttons .login:hover {
+      background: #6c2eb9;
+      color: #fff;
+    }
+
+    .auth-buttons .signup {
+      background: #6c2eb9;
+      color: #fff;
+    }
+
+    .auth-buttons .signup:hover {
+      background: #4b1f7f;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 80vh;
+      background: url("background image.webp") no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .hero-content .learn-btn {
+      padding: 12px 30px;
+      background: #6c2eb9;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .hero-content .learn-btn:hover {
+      background: #4b1f7f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+      <img src="logo.jpg" alt="EduStudy Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="auth-buttons">
+      <a href="#" class="login">Login</a>
+      <a href="#" class="signup">Signup</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Welcome to EduStudy</h1>
+      <p>Learn new skills, grow your career, and unlock your potential with our expert-led courses.</p>
+      <a href="#" class="learn-btn">Learn More</a>
+    </div>
+  </section>
+
+</body>
+</html>
