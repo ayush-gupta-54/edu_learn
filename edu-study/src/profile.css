@@ -1,46 +1,82 @@
+/* Ensure page always scrolls */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* match signup.css */
+  background: #fafafa;
+  overflow-y: auto; /* ✅ allow scrolling */
+}
+
+/* Wrapper */
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 10px;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* ✅ Stronger purple tinted gradient background */
+  background: linear-gradient(
+    135deg,
+    rgba(108, 46, 185, 0.35) 0%,   /* darker purple start */
+    rgba(108, 46, 185, 0.2) 40%,   /* mid purple blend */
+    #fafafa 80%                    /* fade into light neutral */
+  );
+}
+
+/* Container */
 .profile-container {
+  width: 100%;
   max-width: 600px;
-  margin: 50px auto;
-  padding: 30px;
+  padding: 25px;
   border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 6px 16px rgba(108, 46, 185, 0.15); /* soft purple shadow */
+  font-family: Arial, sans-serif;
+  margin-top: 30px; /* ✅ moves box a little up */
+  margin-bottom: 40px;
+  border-top: 5px solid #6c2eb9; /* ✅ purple accent border */
 }
 
+/* Heading */
 .profile-container h2 {
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 26px;
+  margin-bottom: 20px;
+  font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: #6c2eb9; /* purple theme */
 }
 
+/* Form */
 .profile-form {
   display: flex;
   flex-direction: column;
 }
 
 .profile-form label {
-  margin: 12px 0 6px;
+  margin: 10px 0 5px;
   font-weight: 600;
-  color: #444;
+  font-size: 14px;
+  color: #333;
 }
 
 .profile-form input,
 .profile-form textarea {
   padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: all 0.2s ease;
+  border-radius: 6px;
+  font-size: 14px;
   outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
 .profile-form input:focus,
 .profile-form textarea:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 6px rgba(0, 123, 255, 0.2);
+  border-color: #6c2eb9;
+  box-shadow: 0 0 6px rgba(108, 46, 185, 0.25);
 }
 
 .profile-form textarea {
@@ -48,21 +84,22 @@
   min-height: 100px;
 }
 
+/* Button */
 .save-btn {
-  margin-top: 25px;
+  margin-top: 20px;
   padding: 14px;
-  background: #007bff;
+  background: #6c2eb9;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: bold;
   transition: background 0.3s ease, transform 0.1s ease;
 }
 
 .save-btn:hover {
-  background: #0056b3;
+  background: #4b1f7f;
   transform: translateY(-2px);
 }
 
