@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 import logo from "./logo.jpg";
+import { FaEye, FaEyeSlash, FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -17,20 +21,17 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
       const data = await response.json();
 
       if (response.ok) {
-        alert("✅ " + data.message);
-
-        // Optionally save userId in localStorage for future requests
-        // localStorage.setItem("userId", data.userId);
+        localStorage.setItem("userId", data.userId);
+        navigate("/dashboard");
       } else {
-        alert("❌ " + data.message);
+        alert(data.message);
       }
     } catch (err) {
-      console.error("Login error:", err);
-      alert("⚠️ Something went wrong. Please try again.");
+      console.error(err);
+      alert("Something went wrong!");
     } finally {
       setLoading(false);
     }
@@ -39,36 +40,63 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        {/* Logo */}
         <img src={logo} alt="EduStudy Logo" className="logo" />
+        <h2 className="login-title">Welcome Back!</h2>
 
-        {/* Title */}
-        <h2 className="login-title">Log in to EduStudy</h2>
+        {/* Social buttons with only icons */}
+        <div className="social-buttons">
+          <button className="google" title="Login with Google">
+            <FaGoogle />
+          </button>
+          <button className="facebook" title="Login with Facebook">
+            <FaFacebook />
+          </button>
+          <button className="github" title="Login with GitHub">
+            <FaGithub />
+          </button>
+        </div>
 
-        {/* Login Form */}
-        <form onSubmit={handleSubmit}>
-          <label>Email address</label>
+        <div className="divider"><span>or</span></div>
+
+        <form onSubmit={handleLogin}>
+          <label htmlFor="email">Email address</label>
           <input
             type="email"
+            id="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
 
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <label htmlFor="password">Password</label>
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span
+              className="eye"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+          <a href="#" className="forgot">Forgot password?</a>
 
           <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
+
+        <div className="footer-links">
+          Don’t have an account? <Link to="/signup">Sign up</Link>
+        </div>
       </div>
     </div>
   );

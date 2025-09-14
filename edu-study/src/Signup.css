@@ -37,8 +37,10 @@ body {
 }
 
 .logo-header img.logo {
-  height: 50px;
-  margin-right: 10px;
+  max-height: 100px; 
+  width: contain;      
+  margin-right: 0px;
+  object-fit: contain; 
 }
 
 .signup-right h1 {

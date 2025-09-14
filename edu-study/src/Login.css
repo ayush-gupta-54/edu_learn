@@ -1,7 +1,31 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f4f4ff; /* light purple background */
+  /* gradient background */
+  background: linear-gradient(135deg, #6a5af9, #8366f4);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* floating circles */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  top: -80px;
+  left: -80px;
+  z-index: 0;
+}
+body::after {
+  top: 50%;
+  left: 70%;
+  width: 200px;
+  height: 200px;
 }
 
 .login-container {
@@ -9,10 +33,12 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  position: relative;
+  z-index: 1; /* above circles */
 }
 
 .login-box {
-  background: white;
+  background: #fff;
   padding: 40px;
   border-radius: 12px;
   width: 380px;
@@ -27,29 +53,29 @@ body {
 
 .login-title {
   margin-bottom: 20px;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
-  color: #3c2179; /* deep purple */
+  color: #6a0dad; /* purple */
 }
 
 .social-buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 
 .social-buttons button {
-  width: 100px;
+  width: 30%;
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ddd;
   cursor: pointer;
   font-size: 16px;
+  background: paleturquoise;
 }
 
-.google { color: #db4437; font-weight: bold; }
+.google { color: #4285F4; font-weight: bold; }
 .facebook { color: #1877f2; font-weight: bold; }
-.github { color: #333; font-weight: bold; }
 
 .divider {
   margin: 15px 0;
@@ -110,7 +136,7 @@ form input {
   margin-top: 15px;
   width: 100%;
   padding: 12px;
-  background: #6a0dad; /* EduStudy purple */
+  background: #6a0dad;
   border: none;
   border-radius: 6px;
   color: white;
@@ -121,6 +147,7 @@ form input {
 .footer-links {
   margin-top: 20px;
   font-size: 14px;
+  text-align: center;
 }
 
 .footer-links a {
