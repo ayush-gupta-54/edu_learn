@@ -110,12 +110,20 @@ const StudentDashboard = () => {
                 : "—"}
             </span>
           </div>
-          {/* ✅ Coding Languages */}
           <div className="info-item">
             <strong>Coding Languages</strong>
             <span>
               {studentData.codingLanguages?.length
                 ? studentData.codingLanguages.join(", ")
+                : "—"}
+            </span>
+          </div>
+          {/* ✅ New Skills Tab */}
+          <div className="info-item">
+            <strong>Skills</strong>
+            <span>
+              {studentData.skills?.length
+                ? studentData.skills.join(", ")
                 : "—"}
             </span>
           </div>

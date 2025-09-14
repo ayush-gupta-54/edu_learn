@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
 });
-
 const User = mongoose.model("User", userSchema);
 
 // 🔹 Student Schema (profile details)
@@ -34,9 +33,9 @@ const studentSchema = new mongoose.Schema({
   hobbies: [String],
   internships: [String],
   aspirations: String,
-  codingLanguages: [String],   // ✅ Added new field
+  codingLanguages: [String], // ✅ existing field
+  skills: [String],          // ✅ NEW field for skills
 });
-
 const Student = mongoose.model("Student", studentSchema);
 
 //
@@ -89,7 +88,16 @@ app.post("/login", async (req, res) => {
 // 🔹 PROFILE SETUP / UPDATE
 app.put("/student/:userId", async (req, res) => {
   const { userId } = req.params;
-  const { name, cgpa, projects, hobbies, internships, aspirations, codingLanguages } = req.body;
+  const {
+    name,
+    cgpa,
+    projects,
+    hobbies,
+    internships,
+    aspirations,
+    codingLanguages,
+    skills, // ✅ accept skills from request
+  } = req.body;
 
   try {
     let student = await Student.findOne({ userId });
@@ -102,7 +110,8 @@ app.put("/student/:userId", async (req, res) => {
       student.hobbies = hobbies || student.hobbies;
       student.internships = internships || student.internships;
       student.aspirations = aspirations || student.aspirations;
-      student.codingLanguages = codingLanguages || student.codingLanguages; // ✅ update languages
+      student.codingLanguages = codingLanguages || student.codingLanguages;
+      student.skills = skills || student.skills; // ✅ update skills
     } else {
       // Create new profile
       student = new Student({
@@ -113,7 +122,8 @@ app.put("/student/:userId", async (req, res) => {
         hobbies,
         internships,
         aspirations,
-        codingLanguages, // ✅ save languages
+        codingLanguages,
+        skills, // ✅ save skills
       });
     }
 
@@ -131,7 +141,7 @@ app.get("/student/:userId", async (req, res) => {
     const student = await Student.findOne({ userId: req.params.userId });
     if (!student) return res.status(404).json({ message: "Profile not found" });
 
-    res.json(student); // ✅ includes codingLanguages now
+    res.json(student); // ✅ includes codingLanguages & skills now
   } catch (err) {
     console.error("Get profile error:", err);
     res.status(500).json({ message: "Error fetching profile" });
@@ -143,3 +153,4 @@ app.get("/student/:userId", async (req, res) => {
 //
 const PORT = 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+

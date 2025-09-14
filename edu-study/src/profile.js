@@ -12,6 +12,7 @@ const Profile = () => {
     internships: "",
     aspirations: "",
     codingLanguages: "",
+    skills: "", // ✅ Added skills to state
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Profile = () => {
             internships: (data.internships || []).join(", "),
             aspirations: data.aspirations || "",
             codingLanguages: (data.codingLanguages || []).join(", "),
+            skills: (data.skills || []).join(", "), // ✅ Populate skills
           });
         }
       } catch (err) {
@@ -78,6 +80,9 @@ const Profile = () => {
           codingLanguages: formData.codingLanguages
             ? formData.codingLanguages.split(",").map((c) => c.trim())
             : [],
+          skills: formData.skills
+            ? formData.skills.split(",").map((s) => s.trim())
+            : [], // ✅ Send skills to backend
         }),
       });
 
@@ -147,7 +152,6 @@ const Profile = () => {
             placeholder="Comma separated"
           />
 
-          {/* ✅ Coding Languages moved ABOVE Aspirations */}
           <label>Coding Languages</label>
           <input
             type="text"
@@ -155,6 +159,16 @@ const Profile = () => {
             value={formData.codingLanguages}
             onChange={handleChange}
             placeholder="e.g. JavaScript, Python, C++"
+          />
+
+          {/* ✅ New Skills Field */}
+          <label>Skills</label>
+          <input
+            type="text"
+            name="skills"
+            value={formData.skills}
+            onChange={handleChange}
+            placeholder="e.g. Problem Solving, Communication, Leadership"
           />
 
           <label>Aspirations</label>
