@@ -11,6 +11,7 @@ const Profile = () => {
     hobbies: "",
     internships: "",
     aspirations: "",
+    codingLanguages: "", // ✅ added new field
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const Profile = () => {
             hobbies: (data.hobbies || []).join(", "),
             internships: (data.internships || []).join(", "),
             aspirations: data.aspirations || "",
+            codingLanguages: (data.codingLanguages || []).join(", "), // ✅ handle array
           });
         }
       } catch (err) {
@@ -53,7 +55,7 @@ const Profile = () => {
 
     try {
       const response = await fetch(`http://localhost:5000/student/${userId}`, {
-        method: "PUT", // ✅ FIXED: matches backend route
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
@@ -68,6 +70,9 @@ const Profile = () => {
             ? formData.internships.split(",").map((i) => i.trim())
             : [],
           aspirations: formData.aspirations,
+          codingLanguages: formData.codingLanguages
+            ? formData.codingLanguages.split(",").map((c) => c.trim())
+            : [], // ✅ save as array
         }),
       });
 
@@ -143,6 +148,15 @@ const Profile = () => {
           onChange={handleChange}
           placeholder="Your aspirations"
         ></textarea>
+
+        <label>Coding Languages</label>
+        <input
+          type="text"
+          name="codingLanguages"
+          value={formData.codingLanguages}
+          onChange={handleChange}
+          placeholder="e.g. JavaScript, Python, C++"
+        />
 
         <button type="submit" className="save-btn" disabled={loading}>
           {loading ? "Saving..." : "Save & Continue"}

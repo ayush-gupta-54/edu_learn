@@ -34,6 +34,7 @@ const studentSchema = new mongoose.Schema({
   hobbies: [String],
   internships: [String],
   aspirations: String,
+  codingLanguages: [String],   // ✅ Added new field
 });
 
 const Student = mongoose.model("Student", studentSchema);
@@ -56,11 +57,10 @@ app.post("/signup", async (req, res) => {
     const newUser = new User({ email, password: hashedPassword });
     await newUser.save();
 
-    // Note: student profile not created yet
     res.json({
       message: "User registered successfully",
       userId: newUser._id,
-      name: name, // you might want to pass name forward for profile setup
+      name: name,
     });
   } catch (err) {
     console.error("Signup error:", err);
@@ -89,7 +89,7 @@ app.post("/login", async (req, res) => {
 // 🔹 PROFILE SETUP / UPDATE
 app.put("/student/:userId", async (req, res) => {
   const { userId } = req.params;
-  const { name, cgpa, projects, hobbies, internships, aspirations } = req.body;
+  const { name, cgpa, projects, hobbies, internships, aspirations, codingLanguages } = req.body;
 
   try {
     let student = await Student.findOne({ userId });
@@ -102,6 +102,7 @@ app.put("/student/:userId", async (req, res) => {
       student.hobbies = hobbies || student.hobbies;
       student.internships = internships || student.internships;
       student.aspirations = aspirations || student.aspirations;
+      student.codingLanguages = codingLanguages || student.codingLanguages; // ✅ update languages
     } else {
       // Create new profile
       student = new Student({
@@ -112,6 +113,7 @@ app.put("/student/:userId", async (req, res) => {
         hobbies,
         internships,
         aspirations,
+        codingLanguages, // ✅ save languages
       });
     }
 
@@ -129,7 +131,7 @@ app.get("/student/:userId", async (req, res) => {
     const student = await Student.findOne({ userId: req.params.userId });
     if (!student) return res.status(404).json({ message: "Profile not found" });
 
-    res.json(student);
+    res.json(student); // ✅ includes codingLanguages now
   } catch (err) {
     console.error("Get profile error:", err);
     res.status(500).json({ message: "Error fetching profile" });

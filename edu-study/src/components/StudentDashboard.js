@@ -1,3 +1,4 @@
+// src/StudentDashboard.js
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -106,6 +107,15 @@ const StudentDashboard = () => {
             <span>
               {studentData.hobbies?.length
                 ? studentData.hobbies.join(", ")
+                : "—"}
+            </span>
+          </div>
+          {/* ✅ Coding Languages */}
+          <div className="info-item">
+            <strong>Coding Languages</strong>
+            <span>
+              {studentData.codingLanguages?.length
+                ? studentData.codingLanguages.join(", ")
                 : "—"}
             </span>
           </div>
