@@ -9,10 +9,11 @@ import bgImage from "./background.png";
 // Pages
 import Login from "./login";
 import Signup from "./Signup";
-import Profile from "./profile";   // if you want profile setup after signup
+import Profile from "./profile";
 import Contact from "./contact";
 import StudentDashboard from "./components/StudentDashboard";
 import Roadmap from "./components/Roadmap";
+import Community from "./components/Community"; // 👈 Add this import
 
 function Landing() {
   return (
@@ -113,6 +114,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<StudentDashboard />} />
         <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/community" element={<Community />} /> {/* 👈 Added route */}
       </Routes>
     </Router>
   );

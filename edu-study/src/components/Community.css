@@ -1,0 +1,112 @@
+/* 🎯 Scope everything inside .community-container */
+.community-container * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.community-container {
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #e0d7ff, #e9d5ff, #f3e8ff); /* a bit darker pastel purple gradient */
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.community-sidebar {
+  width: 250px;
+  background: linear-gradient(135deg, #f5eaff, #ede9fe); /* soft light sidebar */
+  color: #4b0082;
+  padding: 20px;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.community-sidebar h2 {
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  color: #7c3aed; /* soft purple highlight */
+  text-align: center;
+}
+
+.community-sidebar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Rectangle-style tabs */
+.community-sidebar ul li {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.community-sidebar ul li:hover {
+  background: #d8b4fe;
+  color: #4b0082;
+  border-color: #c084fc;
+}
+
+/* Main Content */
+.community-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.community-header {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.community-header h1 {
+  font-size: 2.2rem;
+  color: #6d28d9;
+}
+
+.community-header p {
+  font-size: 1rem;
+  color: #7c3aed;
+}
+
+/* Posts Grid */
+.community-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.community-post {
+  background: rgba(255, 255, 255, 0.9); /* slightly more solid */
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 5px solid #c084fc; /* light purple accent */
+}
+
+.community-post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.community-post h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #7c3aed;
+}
+
+.community-post p {
+  font-size: 0.95rem;
+  color: #444;
+}

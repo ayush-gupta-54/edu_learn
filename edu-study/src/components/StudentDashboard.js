@@ -1,7 +1,8 @@
-// src/StudentDashboard.js
+// src/components/StudentDashboard.js
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FaUsers } from "react-icons/fa"; // 👈 Community icon
 import "./StudentDashboard.css";
 
 const StudentDashboard = () => {
@@ -34,6 +35,18 @@ const StudentDashboard = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
+      {/* 🎯 Top Right Community Icon */}
+      <motion.div
+        className="community-icon-wrapper"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
+        <Link to="/community" className="community-icon-link" title="Join Community">
+          <FaUsers size={28} /> {/* 👈 Increased size */}
+        </Link>
+      </motion.div>
+
       {/* Dashboard Heading */}
       <motion.h1
         className="dashboard-heading"
@@ -118,7 +131,6 @@ const StudentDashboard = () => {
                 : "—"}
             </span>
           </div>
-          {/* ✅ New Skills Tab */}
           <div className="info-item">
             <strong>Skills</strong>
             <span>
