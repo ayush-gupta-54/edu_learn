@@ -46,13 +46,18 @@ app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "User already exists" });
+    if (existingUser)
+      return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ email, password: hashedPassword });
     await newUser.save();
 
-    res.json({ message: "User registered successfully", userId: newUser._id, name: name });
+    res.json({
+      message: "User registered successfully",
+      userId: newUser._id,
+      name: name,
+    });
   } catch (err) {
     res.status(500).json({ message: "Error registering user" });
   }
@@ -62,10 +67,12 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid email or password" });
+    if (!user)
+      return res.status(400).json({ message: "Invalid email or password" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid email or password" });
 
     res.json({ message: "Login successful", userId: user._id });
   } catch (err) {
@@ -128,26 +135,36 @@ app.get("/student/:userId", async (req, res) => {
   }
 });
 
-// ============= ROADMAP ROUTE (Gemini AI) =============
+// ============= GEMINI AI SETUP =============
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+// ============= ROADMAP ROUTE (Gemini AI) =============
 app.get("/roadmap/:userId", async (req, res) => {
   try {
     const student = await Student.findOne({ userId: req.params.userId });
     if (!student) return res.status(404).json({ message: "Profile not found" });
 
     const prompt = `
-      Create a personalized learning roadmap for the following student:
+      You are an expert career and learning advisor. Create a highly personalized learning roadmap
+      for this student, based entirely on their profile. Each step must be actionable, unique,
+      and directly relevant to the student’s goals, strengths, and experience. 
+
+      Student Profile:
       - Name: ${student.name}
       - CGPA: ${student.cgpa}
-      - Projects: ${student.projects.join(", ")}
-      - Internships: ${student.internships.join(", ")}
-      - Hobbies: ${student.hobbies.join(", ")}
-      - Coding Languages: ${student.codingLanguages.join(", ")}
-      - Skills: ${student.skills.join(", ")}
-      - Career Aspiration: ${student.aspirations}
+      - Projects: ${student.projects.join(", ") || "None"}
+      - Internships: ${student.internships.join(", ") || "None"}
+      - Hobbies: ${student.hobbies.join(", ") || "None"}
+      - Coding Languages: ${student.codingLanguages.join(", ") || "None"}
+      - Skills: ${student.skills.join(", ") || "None"}
+      - Career Aspiration: ${student.aspirations || "Not specified"}
 
-      Please ONLY return valid JSON in this format:
+      Guidelines:
+      1. Short-term (0–6 months): actionable skill/project steps.
+      2. Mid-term (6–18 months): internships, projects, skill growth.
+      3. Long-term (18+ months): career placement, specialization, mastery.
+      Respond ONLY with valid JSON in this format:
+
       {
         "shortTerm": ["step1", "step2"],
         "midTerm": ["step1", "step2"],
@@ -159,14 +176,10 @@ app.get("/roadmap/:userId", async (req, res) => {
     const result = await model.generateContent(prompt);
     const text = result.response.text();
 
-    // Try to extract JSON safely
     const match = text.match(/\{[\s\S]*\}/);
     let roadmap;
-    if (match) {
-      roadmap = JSON.parse(match[0]); // ✅ parse only the JSON block
-    } else {
-      roadmap = { shortTerm: [], midTerm: [], longTerm: [], rawResponse: text };
-    }
+    if (match) roadmap = JSON.parse(match[0]);
+    else roadmap = { shortTerm: [], midTerm: [], longTerm: [], rawResponse: text };
 
     res.json(roadmap);
   } catch (err) {
@@ -175,6 +188,68 @@ app.get("/roadmap/:userId", async (req, res) => {
   }
 });
 
+// ============= ANALYSIS ROUTE (Gemini AI) =============
+app.get("/analysis/:userId", async (req, res) => {
+  try {
+    const student = await Student.findOne({ userId: req.params.userId });
+    if (!student)
+      return res.status(404).json({ message: "Profile not found" });
+
+    const prompt = `
+      Analyze the student profile for closeness to their aspiration.
+      Aspiration: ${student.aspirations}
+      CGPA: ${student.cgpa}
+      Projects: ${student.projects.join(", ")}
+      Internships: ${student.internships.join(", ")}
+      Hobbies: ${student.hobbies.join(", ")}
+      Coding Languages: ${student.codingLanguages.join(", ")}
+      Skills: ${student.skills.join(", ")}
+
+      Return valid JSON:
+      {
+        "closenessScore": 0-100,
+        "strengths": ["..."],
+        "gaps": ["..."],
+        "recommendations": ["..."]
+      }
+    `;
+
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+
+    const match = text.match(/\{[\s\S]*\}/);
+    let analysis;
+    if (match) analysis = JSON.parse(match[0]);
+    else
+      analysis = {
+        closenessScore: 0,
+        strengths: [],
+        gaps: [],
+        recommendations: [],
+        rawResponse: text,
+      };
+
+    const chartData = [
+      { metric: "Progress", score: analysis.closenessScore },
+      { metric: "Remaining", score: 100 - analysis.closenessScore },
+    ];
+
+    res.json({
+      closenessScore: analysis.closenessScore,
+      strengths: analysis.strengths,
+      gaps: analysis.gaps,
+      recommendations: analysis.recommendations,
+      chartData,
+    });
+  } catch (err) {
+    console.error("Analysis error:", err);
+    res.status(500).json({ message: "Error generating analysis" });
+  }
+});
+
 // ============= START SERVER =============
 const PORT = 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
+);
