@@ -1,19 +1,41 @@
 /* =========================
+   Google Font
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* =========================
    Dashboard Container
 ========================= */
 .dashboard {
-  position: relative; /* Needed for absolute positioning of icon */
+  position: relative;
   min-height: 100vh;
-  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
-  padding: 30px;
+  background: linear-gradient(135deg, #b388ff 0%, #f3e5f5 100%);
+  padding: 2rem 2.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Shift to left */
-  gap: 20px;
+  font-family: 'Inter', sans-serif;
+}
 
-  /* ✅ Use system fonts for speed and compatibility */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+/* Flex layout: left + right */
+.dashboard-content {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.left-section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
 
 /* =========================
@@ -21,54 +43,66 @@
 ========================= */
 .dashboard-heading {
   font-size: 2.5rem;
-  font-weight: bold;
+  font-weight: 700;
   color: white;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 1.5px 1.5px 4px rgba(0,0,0,0.2);
 }
 
 /* =========================
    Welcome Card
 ========================= */
 .welcome-card {
-  background: white;
+  background: linear-gradient(145deg, #ffffff, #f3e5f5);
   padding: 20px 25px;
   border-radius: 15px;
   text-align: left;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.welcome-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
 }
 
 .welcome-card h2 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #6c2eb9;
+  color: #7b2ff7;
 }
 
 .student-name {
   display: inline-block;
-  border-bottom: 3px solid #6c2eb9;
+  border-bottom: 2px solid #7b2ff7;
   padding-bottom: 2px;
 }
 
 /* =========================
    Section Cards
 ========================= */
-.section-card {
-  background: white;
+.section-card,
+.analysis-card {
+  background: linear-gradient(145deg, #ffffff, #f3e5f5);
   padding: 20px 25px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-card:hover,
+.analysis-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 38px rgba(0,0,0,0.12);
 }
 
 .section-heading {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #6c2eb9;
+  color: #7b2ff7;
   margin-bottom: 12px;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid #e0d7f1;
   padding-bottom: 5px;
 }
 
@@ -77,35 +111,36 @@
 ========================= */
 .profile-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
 }
 
 .info-item {
-  background: white;
+  background: linear-gradient(145deg, #ffffff, #f3e5f5);
   padding: 12px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .info-item:hover {
   transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .info-item strong {
   display: block;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #6c2eb9;
+  color: #7b2ff7;
   margin-bottom: 6px;
 }
 
 .info-item span {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 400;
-  color: #333;
+  color: #444;
 }
 
 /* =========================
@@ -124,26 +159,28 @@
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-primary {
-  background: #6c2eb9;
+  background: #7b2ff7;
   color: white;
+  box-shadow: 0 5px 15px rgba(123, 47, 247, 0.35);
 }
 
 .btn-primary:hover {
-  background: #4b1f7f;
+  background: #5c1dbb;
   transform: translateY(-2px);
 }
 
 .btn-secondary {
   background: white;
-  color: #6c2eb9;
-  border: 2px solid #6c2eb9;
+  color: #7b2ff7;
+  border: 2px solid #7b2ff7;
 }
 
 .btn-secondary:hover {
-  background: #6c2eb9;
+  background: #7b2ff7;
   color: white;
   transform: translateY(-2px);
 }
@@ -162,33 +199,76 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #6c63ff;
+  background: linear-gradient(135deg, #7b2ff7, #e040fb);
   color: white;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-decoration: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.18);
+  transition: transform 0.25s ease, background 0.3s ease;
 }
 
 .community-icon-link:hover {
-  background-color: #5848d6;
+  background: linear-gradient(135deg, #5c1dbb, #c2185b);
   transform: scale(1.1);
+}
+
+/* =========================
+   Analysis Chart Container
+========================= */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  margin-top: 15px;
+}
+
+.chart-label {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.chart-label h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.chart-label p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 /* =========================
    Responsive
 ========================= */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard-heading {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
   .welcome-card h2 {
     font-size: 1.4rem;
   }
+  .section-heading {
+    font-size: 1.3rem;
+  }
   .profile-info-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+  .chart-container {
+    height: 220px;
   }
 }
