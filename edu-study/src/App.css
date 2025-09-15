@@ -1,31 +1,58 @@
+/* =====================================================
+   GLOBAL STYLES
+===================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
-/* Navbar */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #fefcff, #f7f1ff); /* lighter gradient */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
 header {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 50px;
-  background: #fff;
+  padding: 0 40px;
+  height: 100px;
+  background: linear-gradient(90deg, #b98ce3, #ffffff); /* lighter purple-white gradient */
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-header img {
-  height: 75px;
+header .logo img {
+  height: 100px;
+  width: auto;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+header .logo img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
+
+nav {
+  margin-left: auto;
 }
 
 nav ul {
   display: flex;
   list-style: none;
+  margin-right: 20px;
 }
 
 nav ul li {
@@ -40,41 +67,53 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: #6c2eb9;
+  color: #fff;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
 }
 
 .auth-buttons a {
   margin-left: 15px;
-  padding: 8px 16px;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: all 0.3s;
 }
 
+/* Login button */
 .auth-buttons .login {
-  border: 1px solid #6c2eb9;
-  color: #6c2eb9;
+  background: #6c2eb9;
+  color: #fff;
+  border: none;
+  box-shadow: 0 3px 8px rgba(108,46,185,0.3);
 }
 
 .auth-buttons .login:hover {
-  background: #6c2eb9;
-  color: #fff;
+  background: #4b1f7f;
+  box-shadow: 0 4px 12px rgba(108,46,185,0.5);
 }
 
+/* Signup button */
 .auth-buttons .signup {
-  background: #6c2eb9;
-  color: #fff;
+  background: #fff;
+  color: #6c2eb9;
+  border: 1px solid #6c2eb9;
 }
 
 .auth-buttons .signup:hover {
-  background: #4b1f7f;
+  background: #e6d6fa;
 }
 
-/* Hero Section */
+/* =====================================================
+   HERO SECTION
+===================================================== */
 .hero {
   position: relative;
-  height: 80vh;
+  height: 85vh;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -90,7 +129,7 @@ nav ul li a:hover {
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.4);
 }
 
 .hero-content {
@@ -102,6 +141,7 @@ nav ul li a:hover {
 .hero-content h1 {
   font-size: 3rem;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .hero-content p {
@@ -111,18 +151,71 @@ nav ul li a:hover {
 
 .hero-content .learn-btn {
   padding: 12px 30px;
-  background: #6c2eb9;
+  background: linear-gradient(135deg, #6c2eb9, #9b5de5);
   color: #fff;
   border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .hero-content .learn-btn:hover {
-  background: #4b1f7f;
+  background: linear-gradient(135deg, #4b1f7f, #7c3aed);
+  transform: translateY(-2px);
 }
 
+/* =====================================================
+   INNOVATIONS SECTION
+===================================================== */
+.innovations-section {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #fff, #f4ebff);
+}
+
+.innovations-section h2 {
+  font-size: 2.2rem;
+  color: #6a0dad;
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+
+.innovations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.innovation-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.innovation-card h3 {
+  font-size: 1.2rem;
+  color: #6c2eb9;
+  margin-bottom: 12px;
+}
+
+.innovation-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.innovation-card:hover {
+  transform: translateY(-8px);
+}
+
+/* =====================================================
+   CONTACT PAGE
+===================================================== */
 .contact-page {
   padding: 40px;
   text-align: center;
@@ -133,6 +226,7 @@ nav ul li a:hover {
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -157,6 +251,7 @@ nav ul li a:hover {
   background-color: #007bff;
   color: white;
   cursor: pointer;
+  transition: background 0.3s;
 }
 .back-btn:hover {
   background-color: #0056b3;
@@ -171,104 +266,15 @@ nav ul li a:hover {
   color: white;
   cursor: pointer;
   text-decoration: none;
+  transition: background 0.3s;
 }
 .contact-btn:hover {
   background: #1e7e34;
 }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f7f3fb;
-  color: #333;
-}
 
-.header {
-  display: flex;
-  align-items: center;
-  padding: 15px 30px;
-  background: #6a0dad;
-  color: white;
-}
-
-.logo {
-  height: 50px;
-  margin-right: 15px;
-}
-
-.container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  text-align: center;
-  color: #6a0dad;
-  margin-bottom: 20px;
-}
-
-.contact-details {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-.contact-details div {
-  text-align: center;
-  margin: 10px;
-  flex: 1;
-}
-
-.contact-details div h3 {
-  margin-bottom: 5px;
-  color: #6a0dad;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.form input,
-.form textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 100%;
-  font-size: 1rem;
-}
-
-.form textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.form button {
-  padding: 12px;
-  background: #6a0dad;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.form button:hover {
-  background: #530c91;
-}
-
-.footer {
-  text-align: center;
-  padding: 15px;
-  background: #6a0dad;
-  color: white;
-  margin-top: 40px;
-}
+/* =====================================================
+   PROFILE PAGE
+===================================================== */
 .profile-container {
   max-width: 600px;
   margin: 40px auto;
@@ -315,8 +321,21 @@ h2 {
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
+  transition: background 0.3s;
 }
 
 .save-btn:hover {
   background: #0056b3;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background: linear-gradient(90deg, #d9c6f8, #b98ce3); /* soft gradient */
+  color: white;
+  margin-top: 40px;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1); /* subtle top shadow */
 }

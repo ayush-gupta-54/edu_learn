@@ -1,11 +1,10 @@
-// src/App.js
 import React from "react";
-import "./App.css";
-import logo from "./logo.jpg"; // Place your logo in src folder
+import "./contact.css";
+import logo from "./logo.jpg"; // Make sure your logo is in src folder
 
-function App() {
+function Contact() {
   return (
-    <div className="App">
+    <div className="ContactPage">
       {/* Header */}
       <header className="header">
         <img src={logo} alt="EduStudy Logo" className="logo" />
@@ -16,7 +15,7 @@ function App() {
       <div className="container">
         <h2>Contact Us</h2>
 
-        {/* Contact Info */}
+        {/* Contact Details */}
         <div className="contact-details">
           <div>
             <h3>📞 Phone</h3>
@@ -50,4 +49,4 @@ function App() {
   );
 }
 
-export default App;
+export default Contact;

@@ -13,7 +13,68 @@ import Profile from "./profile";
 import Contact from "./contact";
 import StudentDashboard from "./components/StudentDashboard";
 import Roadmap from "./components/Roadmap";
-import Community from "./components/Community"; // 👈 Add this import
+import Community from "./components/Community";
+
+function Innovations() {
+  const innovations = [
+    {
+      title: "AI-Powered Bias-Free Assessment",
+      desc: "Evaluates students against their own past growth, rewarding effort and improvement."
+    },
+    {
+      title: "Personalized Learning Roadmap Generator",
+      desc: "Creates dynamic, living roadmaps with targeted exercises and resources."
+    },
+    {
+      title: "Lifelong Learning Memory Graph",
+      desc: "Links knowledge across subjects into a personal AI memory companion."
+    },
+    {
+      title: "Adaptive Curriculum Shaping",
+      desc: "Reshapes the learning sequence dynamically for each learner’s style."
+    },
+    {
+      title: "AI-Powered Peer Learning Matchmaker",
+      desc: "Pairs students with complementary strengths for collaborative learning."
+    },
+    {
+      title: "Error-Tolerance Mapping",
+      desc: "Categorizes mistakes into a taxonomy and provides precise feedback."
+    },
+    {
+      title: "AI-Guided Reflection After Assessment",
+      desc: "Encourages metacognitive reflection to build 'learning how to learn'."
+    },
+  ];
+
+  return (
+    <section className="innovations-section">
+      <motion.h2
+        initial={{ opacity: 0, y: -30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        🚀 Innovations for an AI-Powered Next-Gen Assessment System
+      </motion.h2>
+
+      <div className="innovations-grid">
+        {innovations.map((item, i) => (
+          <motion.div
+            className="innovation-card"
+            key={i}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: i * 0.2 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function Landing() {
   return (
@@ -40,11 +101,9 @@ function Landing() {
             <motion.li whileHover={{ scale: 1.1 }}>
               <Link to="/resources">Resources</Link>
             </motion.li>
+            {/* Removed Innovations button */}
             <motion.li whileHover={{ scale: 1.1 }}>
-              <Link to="/about">About</Link>
-            </motion.li>
-            <motion.li whileHover={{ scale: 1.1 }}>
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact">Contact Us</Link> {/* ✅ Updated */}
             </motion.li>
           </ul>
         </nav>
@@ -99,6 +158,11 @@ function Landing() {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* Innovations Section (still visible on landing page) */}
+      <div id="innovations">
+        <Innovations />
+      </div>
     </div>
   );
 }
@@ -114,7 +178,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<StudentDashboard />} />
         <Route path="/roadmap" element={<Roadmap />} />
-        <Route path="/community" element={<Community />} /> {/* 👈 Added route */}
+        <Route path="/community" element={<Community />} />
       </Routes>
     </Router>
   );
