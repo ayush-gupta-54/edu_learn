@@ -3,7 +3,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUsers } from "react-icons/fa";
-import { RadialBarChart, RadialBar, ResponsiveContainer } from "recharts";
+import {
+  RadialBarChart,
+  RadialBar,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  LabelList,
+} from "recharts";
 import "./StudentDashboard.css";
 
 const StudentDashboard = () => {
@@ -20,7 +31,7 @@ const StudentDashboard = () => {
     }
   );
 
-  const [analysisData, setAnalysisData] = useState([]);
+  const [analysisData, setAnalysisData] = useState({});
   const [closenessScore, setClosenessScore] = useState(0);
   const [loadingAnalysis, setLoadingAnalysis] = useState(false);
 
@@ -41,19 +52,21 @@ const StudentDashboard = () => {
   }, []);
 
   const handleViewAnalysis = () => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) return;
+  const userId = localStorage.getItem("userId");
+  if (!userId) return;
 
-    setLoadingAnalysis(true);
-    fetch(`http://localhost:5000/analysis/${userId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAnalysisData(data.chartData || []);
-        setClosenessScore(data.closenessScore || 0);
-      })
-      .catch((err) => console.error("Error fetching analysis data:", err))
-      .finally(() => setLoadingAnalysis(false));
-  };
+  setLoadingAnalysis(true);
+  fetch(`http://localhost:5000/analysis/${userId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      // Save the full analysis object instead of just chartData
+      setAnalysisData(data);
+      setClosenessScore(data.closenessScore || 0);
+    })
+    .catch((err) => console.error("Error fetching analysis data:", err))
+    .finally(() => setLoadingAnalysis(false));
+};
+
 
   return (
     <motion.div
@@ -162,7 +175,7 @@ const StudentDashboard = () => {
           </motion.div>
         </div>
 
-        {/* Right Section: Analysis Chart */}
+        {/* Right Section: Analysis Charts */}
         <div className="right-section">
           <motion.div
             className="analysis-card"
@@ -171,43 +184,84 @@ const StudentDashboard = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h3 className="section-heading">Progress Analysis</h3>
-            {analysisData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={300}>
-                <RadialBarChart
-                  cx="50%"
-                  cy="50%"
-                  innerRadius="70%"
-                  outerRadius="100%"
-                  barSize={15}
-                  startAngle={90}
-                  endAngle={-270}
-                  data={[
-                    { name: "Background", value: 100, fill: "url(#bgGradient)" },
-                    { name: "Progress", value: closenessScore, fill: "url(#progressGradient)" },
-                  ]}
-                >
-                  <defs>
-                    <linearGradient id="bgGradient" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#f0f0f0" />
-                      <stop offset="100%" stopColor="#d9d9d9" />
-                    </linearGradient>
-                    <linearGradient id="progressGradient" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="red" />
-                      <stop offset="100%" stopColor="yellow" />
-                    </linearGradient>
-                  </defs>
-                  <RadialBar minAngle={15} clockWise dataKey="value" cornerRadius={10} />
-                  <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" fontSize="22" fontWeight="600" fill="#333">
-                    {closenessScore}%
-                  </text>
-                  <text x="50%" y="60%" textAnchor="middle" dominantBaseline="middle" fontSize="14" fill="#666">
-                    towards your goal
-                  </text>
-                </RadialBarChart>
-              </ResponsiveContainer>
+            {Object.keys(analysisData).length > 0 ? (
+              <>
+                {/* Heading for Radial Progress */}
+                <h4 style={{ textAlign: "center", marginBottom: "8px" }}>🎯 Goal Progress</h4>
+                <ResponsiveContainer width="100%" height={260}>
+                  <RadialBarChart
+                    cx="50%"
+                    cy="50%"
+                    innerRadius="70%"
+                    outerRadius="100%"
+                    barSize={15}
+                    startAngle={90}
+                    endAngle={-270}
+                    data={[
+                      { name: "Background", value: 100, fill: "url(#bgGradient)" },
+                      { name: "Progress", value: closenessScore, fill: "url(#progressGradient)" },
+                    ]}
+                  >
+                    <defs>
+                      <linearGradient id="bgGradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#f0f0f0" />
+                        <stop offset="100%" stopColor="#d9d9d9" />
+                      </linearGradient>
+                      <linearGradient id="progressGradient" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="red" />
+                        <stop offset="100%" stopColor="yellow" />
+                      </linearGradient>
+                    </defs>
+                    <RadialBar minAngle={15} clockWise dataKey="value" cornerRadius={10} />
+                    <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" fontSize="22" fontWeight="600" fill="#333">
+                      {closenessScore}%
+                    </text>
+                    <text x="50%" y="60%" textAnchor="middle" dominantBaseline="middle" fontSize="14" fill="#666">
+                      towards your goal
+                    </text>
+                  </RadialBarChart>
+                </ResponsiveContainer>
+
+                {/* Heading for Bar Chart */}
+                <h4 style={{ textAlign: "center", marginTop: "20px", marginBottom: "8px" }}>📊 Skills Breakdown</h4>
+                <ResponsiveContainer width="100%" height={260}>
+  <BarChart
+    data={[
+      { skill: "Creativity", score: analysisData.creativity || 0, fill: "url(#creativityGradient)" },
+      { skill: "Confidence", score: analysisData.confidence || 0, fill: "url(#confidenceGradient)" },
+      { skill: "Logical Thinking", score: analysisData.logicalThinking || 0, fill: "url(#logicGradient)" },
+    ]}
+    margin={{ top: 20, right: 20, left: 0, bottom: 20 }}
+  >
+    <defs>
+      <linearGradient id="creativityGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#ff4d4d" />
+        <stop offset="100%" stopColor="#ff8080" />
+      </linearGradient>
+      <linearGradient id="confidenceGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#fff176" />
+        <stop offset="100%" stopColor="#ffeb3b" />
+      </linearGradient>
+      <linearGradient id="logicGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#81c784" />
+        <stop offset="100%" stopColor="#a5d6a7" />
+      </linearGradient>
+    </defs>
+
+    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+    <XAxis dataKey="skill" />
+    <YAxis domain={[0, 100]} tickFormatter={(val) => `${val}%`} />
+    <Tooltip formatter={(val) => `${val}%`} />
+    <Bar dataKey="score" radius={[10, 10, 0, 0]}>
+      <LabelList dataKey="score" position="top" formatter={(val) => `${val}%`} />
+    </Bar>
+  </BarChart>
+</ResponsiveContainer>
+
+              </>
             ) : (
               <p style={{ textAlign: "center", padding: "20px" }}>
-                Click “View Analysis” to generate your chart.
+                Click “View Analysis” to generate your charts.
               </p>
             )}
           </motion.div>

@@ -188,7 +188,7 @@ app.get("/roadmap/:userId", async (req, res) => {
   }
 });
 
-// ============= ANALYSIS ROUTE (Gemini AI) =============
+// ============= ANALYSIS ROUTE (Gemini AI) ============= 
 app.get("/analysis/:userId", async (req, res) => {
   try {
     const student = await Student.findOne({ userId: req.params.userId });
@@ -196,7 +196,7 @@ app.get("/analysis/:userId", async (req, res) => {
       return res.status(404).json({ message: "Profile not found" });
 
     const prompt = `
-      Analyze the student profile for closeness to their aspiration.
+      Analyze the student profile for closeness to their aspiration and soft skills.
       Aspiration: ${student.aspirations}
       CGPA: ${student.cgpa}
       Projects: ${student.projects.join(", ")}
@@ -205,9 +205,12 @@ app.get("/analysis/:userId", async (req, res) => {
       Coding Languages: ${student.codingLanguages.join(", ")}
       Skills: ${student.skills.join(", ")}
 
-      Return valid JSON:
+      Return valid JSON ONLY:
       {
         "closenessScore": 0-100,
+        "creativity": 0-100,
+        "confidence": 0-100,
+        "logicalThinking": 0-100,
         "strengths": ["..."],
         "gaps": ["..."],
         "recommendations": ["..."]
@@ -220,27 +223,44 @@ app.get("/analysis/:userId", async (req, res) => {
 
     const match = text.match(/\{[\s\S]*\}/);
     let analysis;
-    if (match) analysis = JSON.parse(match[0]);
-    else
+    if (match) {
+      analysis = JSON.parse(match[0]);
+    } else {
       analysis = {
         closenessScore: 0,
+        creativity: 0,
+        confidence: 0,
+        logicalThinking: 0,
         strengths: [],
         gaps: [],
         recommendations: [],
         rawResponse: text,
       };
+    }
 
+    // First chart (progress donut)
     const chartData = [
       { metric: "Progress", score: analysis.closenessScore },
       { metric: "Remaining", score: 100 - analysis.closenessScore },
     ];
 
+    // Second chart (bar skills)
+    const skillsData = [
+      { skill: "Creativity", score: analysis.creativity },
+      { skill: "Confidence", score: analysis.confidence },
+      { skill: "Logical Thinking", score: analysis.logicalThinking },
+    ];
+
     res.json({
       closenessScore: analysis.closenessScore,
+      creativity: analysis.creativity,
+      confidence: analysis.confidence,
+      logicalThinking: analysis.logicalThinking,
       strengths: analysis.strengths,
       gaps: analysis.gaps,
       recommendations: analysis.recommendations,
-      chartData,
+      chartData,   // For donut chart
+      skillsData,  // For bar chart
     });
   } catch (err) {
     console.error("Analysis error:", err);
